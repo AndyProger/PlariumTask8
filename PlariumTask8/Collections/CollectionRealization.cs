@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using UserSpace;
+using System.Collections.Generic;
 
 namespace CollectionOfUsers
 {
@@ -53,5 +54,20 @@ namespace CollectionOfUsers
 
             return string.Join(" ", users);
         }
+
+        /// <summary>
+        /// Доп. задание для практики
+        /// </summary>
+        /// <returns> Пользователя, который получил больше всего писем </returns>
+        public static User GetUserWithTheMostEmailsReceived()
+        {
+            return Dictionary.Keys.OrderByDescending(l => l.LettersReceived).First();
+        }
+
+        /// <summary>
+        /// Доп. задание для практики
+        /// </summary>
+        /// <returns> Сортировка пользователей от старших к младшим </returns>
+        public static List<User> SortUsersByBirthday() => Dictionary.Keys.OrderBy(x => x.Birthdate).ToList();
     }
 }

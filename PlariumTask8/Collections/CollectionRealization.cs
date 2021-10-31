@@ -11,12 +11,10 @@ namespace CollectionOfUsers
         /// </summary>
         public static User FindUserWithTheShortesLetter()
         {
-            var users = Dictionary.Keys.SelectMany(u => u.Letters,
-                                                (u, l) => new { User = u, Letter = l })
-                                                .OrderBy(u => u.Letter.Text.Length)
-                                                .Select(u => u.User).FirstOrDefault();
-
-            return users;
+            return Dictionary.Keys.SelectMany(u => u.Letters,
+                                             (u, l) => new { User = u, Letter = l })
+                                             .OrderBy(u => u.Letter.Text.Length)
+                                             .Select(u => u.User).FirstOrDefault();
         }
 
         /// <summary>
@@ -24,17 +22,10 @@ namespace CollectionOfUsers
         /// </summary>
         public static string GetUsersInfo()
         {
-            StringBuilder info = new StringBuilder();
-
             var usersInfo = Dictionary.Keys.Select(x => x + $"Sent letters: {x.LettersSent}\n" +
                     $"Received letters: {x.LettersReceived}\n\n");
 
-            foreach(var str in usersInfo)
-            {
-                info.Append(str);
-            }
-
-            return info.ToString();
+            return string.Join(" ", usersInfo);
         }
 
         /// <summary>
@@ -42,19 +33,12 @@ namespace CollectionOfUsers
         /// </summary>
         public static string GetUsersWithSuchTopic(string topic)
         {
-            StringBuilder info = new StringBuilder();
-
             var users = Dictionary.Keys.SelectMany(u => u.Letters,
                                                 (u, l) => new { User = u, Letter = l })
                                                 .Where(u => u.Letter.Topic == topic)
                                                 .Select(u => u.User);
 
-            foreach (var user in users)
-            {
-                info.Append(user + "\n");
-            }
-
-            return info.ToString();
+            return string.Join(" ", users);
         }
 
         /// <summary>
@@ -62,19 +46,12 @@ namespace CollectionOfUsers
         /// </summary>
         public static string GetUsersWithoutSuchTopic(string topic)
         {
-            StringBuilder info = new StringBuilder();
-
             var users = Dictionary.Keys.Except(Dictionary.Keys.SelectMany(u => u.Letters,
                                                 (u, l) => new { User = u, Letter = l })
                                                 .Where(u => u.Letter.Topic == topic)
                                                 .Select(u => u.User).Distinct());
 
-            foreach (var user in users)
-            {
-                info.Append(user + "\n");
-            }
-
-            return info.ToString();
+            return string.Join(" ", users);
         }
     }
 }
